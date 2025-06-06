@@ -96,7 +96,7 @@ CMD bash -c "\
 echo '🌀 A1(AI는 에이원) : https://www.youtube.com/@A01demort' && \
 jupyter lab --ip=0.0.0.0 --port=8888 --allow-root \
 --ServerApp.token='' --ServerApp.password='' & \
-python /workspace/ComfyUI/main.py --listen 0.0.0.0 --port=8188 \
+python -u /workspace/ComfyUI/main.py --listen 0.0.0.0 --port=8188 \
 --front-end-version Comfy-Org/ComfyUI_frontend@latest & \
 sleep 10 && \
 bash /workspace/init_or_check_nodes.sh && \
