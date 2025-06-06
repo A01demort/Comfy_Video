@@ -48,12 +48,12 @@ RUN pip install --force-reinstall jupyterlab==3.6.6 jupyter-server==1.23.6
 
 # Jupyter 설정파일 보완
 RUN mkdir -p /root/.jupyter && \
-    echo "c.NotebookApp.allow_origin = '*'\n\
-c.NotebookApp.ip = '0.0.0.0'\n\
-c.NotebookApp.open_browser = False\n\
-c.NotebookApp.token = ''\n\
-c.NotebookApp.password = ''\n\
-c.NotebookApp.terminado_settings = {'shell_command': ['/bin/bash']}" \
+    echo "c.ServerApp.allow_origin = '*'\n\
+c.ServerApp.ip = '0.0.0.0'\n\
+c.ServerApp.open_browser = False\n\
+c.ServerApp.token = ''\n\
+c.ServerApp.password = ''\n\
+c.ServerApp.terminado_settings = {'shell_command': ['/bin/bash']}" \
 > /root/.jupyter/jupyter_notebook_config.py
 
 # segment-anything 설치
