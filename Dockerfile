@@ -75,13 +75,14 @@ RUN pip install --no-cache-dir \
     pip install facexlib basicsr gfpgan realesrgan || echo '⚠️ facexlib 실패' && \
     pip install timm ultralytics ftfy bitsandbytes xformers || echo '⚠️ 기타 패키지 실패'
 
-# 자동 커스텀 노드 설치 스크립트 복사
-COPY init_or_check_nodes.sh /workspace/init_or_check_nodes.sh
-RUN chmod +x /workspace/init_or_check_nodes.sh
+# A1 폴더 생성 후 자동 커스텀 노드 설치 스크립트 복사
+RUN mkdir -p /workspace/A1
+COPY init_or_check_nodes.sh /workspace/A1/init_or_check_nodes.sh
+RUN chmod +x /workspace/A1/init_or_check_nodes.sh
 
 # Hugging Face 모델 다운로드 스크립트 복사
-COPY Hugging_down_a1.sh /workspace/Hugging_down_a1.sh
-RUN chmod +x /workspace/Hugging_down_a1.sh
+COPY Hugging_down_a1.sh /workspace/A1/Hugging_down_a1.sh
+RUN chmod +x /workspace/A1/Hugging_down_a1.sh
 
 
 # 데이터 볼륨 마운트 경로 설정 (추가 보존 디렉토리)
@@ -91,13 +92,13 @@ VOLUME ["/workspace"]
 EXPOSE 8188
 EXPOSE 8888
 
-# 실행 명령어 – ComfyUI 실행 후 10초 뒤 의존성 복구 스크립트 비동기 실행
+# 실행 명령어
 CMD bash -c "\
 echo '🌀 A1(AI는 에이원) : https://www.youtube.com/@A01demort' && \
 jupyter lab --ip=0.0.0.0 --port=8888 --allow-root \
 --ServerApp.token='' --ServerApp.password='' & \
 python -u /workspace/ComfyUI/main.py --listen 0.0.0.0 --port=8188 \
 --front-end-version Comfy-Org/ComfyUI_frontend@latest & \
-( sleep 10; echo '🔧 RunPod 재시작 시 의존성 복구 시작'; bash /workspace/init_or_check_nodes.sh; echo '✅ 모든 커스텀 노드 의존성 복구 완료'; echo '🚀 다음 단계로 넘어갑니다' ) & \
 wait"
+
 
