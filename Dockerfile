@@ -91,13 +91,13 @@ VOLUME ["/workspace"]
 EXPOSE 8188
 EXPOSE 8888
 
-# 실행 명령어 – 자동 노드 설치 후 Jupyter & ComfyUI 실행
+# 실행 명령어 – ComfyUI 실행 후 10초 뒤 의존성 복구 스크립트 비동기 실행
 CMD bash -c "\
 echo '🌀 A1(AI는 에이원) : https://www.youtube.com/@A01demort' && \
 jupyter lab --ip=0.0.0.0 --port=8888 --allow-root \
 --ServerApp.token='' --ServerApp.password='' & \
 python -u /workspace/ComfyUI/main.py --listen 0.0.0.0 --port=8188 \
 --front-end-version Comfy-Org/ComfyUI_frontend@latest & \
-sleep 10 && \
-bash /workspace/init_or_check_nodes.sh && \
+( sleep 10; echo '🔧 RunPod 재시작 시 의존성 복구 시작'; bash /workspace/init_or_check_nodes.sh; echo '✅ 모든 커스텀 노드 의존성 복구 완료'; echo '🚀 다음 단계로 넘어갑니다' ) & \
 wait"
+
