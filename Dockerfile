@@ -93,9 +93,11 @@ EXPOSE 8888
 
 # 실행 명령어 – 자동 노드 설치 후 Jupyter & ComfyUI 실행
 CMD bash -c "\
-bash -x /workspace/init_or_check_nodes.sh && \
+echo '🌀 A1(AI는 에이원) : https://www.youtube.com/@A01demort' && \
 jupyter lab --ip=0.0.0.0 --port=8888 --allow-root \
 --ServerApp.token='' --ServerApp.password='' & \
 python /workspace/ComfyUI/main.py --listen 0.0.0.0 --port=8188 \
 --front-end-version Comfy-Org/ComfyUI_frontend@latest & \
-wait; echo 'A1(AI는 에이원) : https://www.youtube.com/@A01demort'"
+sleep 10 && \
+bash /workspace/init_or_check_nodes.sh && \
+wait"
