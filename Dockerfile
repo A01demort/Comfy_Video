@@ -79,9 +79,10 @@ RUN pip install --no-cache-dir \
 COPY init_or_check_nodes.sh /workspace/init_or_check_nodes.sh
 RUN chmod +x /workspace/init_or_check_nodes.sh
 
-# a01demort 설치 스크립트 복사
-RUN mkdir -p /workspace/ComfyUI/scripts
-COPY a01demort_install.sh /workspace/ComfyUI/scripts/a01demort_install.sh
+# Hugging Face 모델 다운로드 스크립트 복사
+COPY Hugging_down_a1.sh /workspace/Hugging_down_a1.sh
+RUN chmod +x /workspace/Hugging_down_a1.sh
+
 
 # 데이터 볼륨 마운트 경로 설정 (추가 보존 디렉토리)
 VOLUME ["/workspace", "/workspace/ComfyUI/custom_nodes", "/workspace/ComfyUI/models", "/workspace/ComfyUI/outputs"]
