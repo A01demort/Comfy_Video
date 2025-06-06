@@ -85,7 +85,7 @@ RUN chmod +x /workspace/Hugging_down_a1.sh
 
 
 # 데이터 볼륨 마운트 경로 설정 (추가 보존 디렉토리)
-VOLUME ["/workspace", "/workspace/ComfyUI/custom_nodes", "/workspace/ComfyUI/models", "/workspace/ComfyUI/outputs"]
+VOLUME ["/workspace"]
 
 # 포트 설정
 EXPOSE 8188
@@ -99,4 +99,3 @@ jupyter lab --ip=0.0.0.0 --port=8888 --allow-root \
 python /workspace/ComfyUI/main.py --listen 0.0.0.0 --port=8188 \
 --front-end-version Comfy-Org/ComfyUI_frontend@latest & \
 wait; echo 'A1(AI는 에이원) : https://www.youtube.com/@A01demort'"
-
