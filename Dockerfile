@@ -114,6 +114,7 @@ EXPOSE 8888
 CMD bash -c "\
 echo '🌀 A1(AI는 에이원) : https://www.youtube.com/@A01demort' && \
 jupyter lab --ip=0.0.0.0 --port=8888 --allow-root \
+--ServerApp.root_dir=/workspace \
 --ServerApp.token='' --ServerApp.password='' & \
 python -u /workspace/ComfyUI/main.py --listen 0.0.0.0 --port=8188 \
 --front-end-version Comfy-Org/ComfyUI_frontend@latest & \
