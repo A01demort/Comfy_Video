@@ -71,6 +71,9 @@ downloads=(
 
   # 5. 텍스트 인코더 모델 - clip_l
   "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/text_encoders/clip_l.safetensors|/workspace/ComfyUI/models/text_encoders/clip_l.safetensors"
+
+  # 6. 텍스트 인코더 모델 - llava (fp8 scaled)
+  "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/text_encoders/llava_llama3_fp8_scaled.safetensors|/workspace/ComfyUI/models/text_encoders/llava_llama3_fp8_scaled.safetensors"
 )
 
 # ====================================
