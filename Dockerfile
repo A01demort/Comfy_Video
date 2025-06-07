@@ -46,34 +46,53 @@ RUN apt-get remove -y nodejs npm && \
 # JupyterLab 안정 버전 설치
 RUN pip install --force-reinstall jupyterlab==3.6.6 jupyter-server==1.23.6
 
-# Jupyter 설정파일 보완
-RUN mkdir -p /root/.jupyter && \
-    echo "c.ServerApp.allow_origin = '*'\n\
-c.ServerApp.ip = '0.0.0.0'\n\
-c.ServerApp.open_browser = False\n\
-c.ServerApp.token = ''\n\
-c.ServerApp.password = ''\n\
-c.ServerApp.terminado_settings = {'shell_command': ['/bin/bash']}" \
-> /root/.jupyter/jupyter_notebook_config.py
-
-# segment-anything 설치
-RUN git clone https://github.com/facebookresearch/segment-anything.git /workspace/segment-anything || echo '⚠️ segment-anything 실패' && \
-    pip install -e /workspace/segment-anything || echo '⚠️ segment-anything pip 설치 실패'
-
-# ReActor ONNX 모델 설치
-RUN mkdir -p /workspace/ComfyUI/models/insightface && \
+# 커스텀 노드 및 의존성 설치 통합
+RUN echo '📁 커스텀 노드 및 의존성 설치 시작' && \
+    mkdir -p /workspace/ComfyUI/custom_nodes && \
+    cd /workspace/ComfyUI/custom_nodes && \
+    git clone https://github.com/ltdrdata/ComfyUI-Manager.git || echo '⚠️ Manager 실패' && \
+    git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git || echo '⚠️ Scripts 실패' && \
+    git clone https://github.com/rgthree/rgthree-comfy.git || echo '⚠️ rgthree 실패' && \
+    git clone https://github.com/WASasquatch/was-node-suite-comfyui.git || echo '⚠️ WAS 실패' && \
+    git clone https://github.com/kijai/ComfyUI-KJNodes.git || echo '⚠️ KJNodes 실패' && \
+    git clone https://github.com/cubiq/ComfyUI_essentials.git || echo '⚠️ Essentials 실패' && \
+    git clone https://github.com/city96/ComfyUI-GGUF.git || echo '⚠️ GGUF 실패' && \
+    git clone https://github.com/welltop-cn/ComfyUI-TeaCache.git || echo '⚠️ TeaCache 실패' && \
+    git clone https://github.com/kaibioinfo/ComfyUI_AdvancedRefluxControl.git || echo '⚠️ ARC 실패' && \
+    git clone https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes.git || echo '⚠️ Comfyroll 실패' && \
+    git clone https://github.com/cubiq/PuLID_ComfyUI.git || echo '⚠️ PuLID 실패' && \
+    git clone https://github.com/sipie800/ComfyUI-PuLID-Flux-Enhanced.git || echo '⚠️ Flux 실패' && \
+    git clone https://github.com/Gourieff/ComfyUI-ReActor.git || echo '⚠️ ReActor 실패' && \
+    git clone https://github.com/yolain/ComfyUI-Easy-Use.git || echo '⚠️ EasyUse 실패' && \
+    git clone https://github.com/PowerHouseMan/ComfyUI-AdvancedLivePortrait.git || echo '⚠️ LivePortrait 실패' && \
+    git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git || echo '⚠️ VideoHelper 실패' && \
+    git clone https://github.com/Jonseed/ComfyUI-Detail-Daemon.git || echo '⚠️ Daemon 실패' && \
+    git clone https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git || echo '⚠️ Upscale 실패' && \
+    git clone https://github.com/risunobushi/comfyUI_FrequencySeparation_RGB-HSV.git || echo '⚠️ Frequency 실패' && \
+    git clone https://github.com/silveroxides/ComfyUI_bnb_nf4_fp4_Loaders.git || echo '⚠️ NF4 노드 실패' && \
+    \
+    echo '📦 segment-anything 설치' && \
+    git clone https://github.com/facebookresearch/segment-anything.git /workspace/segment-anything || echo '⚠️ segment-anything 실패' && \
+    pip install -e /workspace/segment-anything || echo '⚠️ segment-anything pip 설치 실패' && \
+    \
+    echo '📦 ReActor ONNX 모델 설치' && \
+    mkdir -p /workspace/ComfyUI/models/insightface && \
     wget -O /workspace/ComfyUI/models/insightface/inswapper_128.onnx \
-    https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/inswapper_128.onnx || echo '⚠️ ONNX 다운로드 실패'
-
-# 공통 파이썬 패키지 설치
-RUN pip install --no-cache-dir \
-    GitPython onnx onnxruntime opencv-python-headless tqdm requests \
-    scikit-image piexif packaging transformers accelerate peft sentencepiece \
-    protobuf scipy einops pandas matplotlib imageio[ffmpeg] pyzbar pillow numba \
-    gguf diffusers insightface dill || echo '⚠️ 일부 pip 설치 실패' && \
+    https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/inswapper_128.onnx || echo '⚠️ ONNX 다운로드 실패' && \
+    \
+    echo '📦 파이썬 패키지 설치' && \
+    pip install --no-cache-dir \
+        GitPython onnx onnxruntime opencv-python-headless tqdm requests \
+        scikit-image piexif packaging transformers accelerate peft sentencepiece \
+        protobuf scipy einops pandas matplotlib imageio[ffmpeg] pyzbar pillow numba \
+        gguf diffusers insightface dill || echo '⚠️ 일부 pip 설치 실패' && \
     pip install facelib==0.2.2 mtcnn==0.1.1 || echo '⚠️ facelib 실패' && \
     pip install facexlib basicsr gfpgan realesrgan || echo '⚠️ facexlib 실패' && \
-    pip install timm ultralytics ftfy bitsandbytes xformers || echo '⚠️ 기타 패키지 실패'
+    pip install timm || echo '⚠️ timm 실패' && \
+    pip install ultralytics || echo '⚠️ ultralytics 실패' && \
+    pip install ftfy || echo '⚠️ ftfy 실패' && \
+    pip install bitsandbytes xformers || echo '⚠️ bitsandbytes 또는 xformers 설치 실패'
+
 
 # A1 폴더 생성 후 자동 커스텀 노드 설치 스크립트 복사
 RUN mkdir -p /workspace/A1
@@ -84,8 +103,7 @@ RUN chmod +x /workspace/A1/init_or_check_nodes.sh
 COPY Hugging_down_a1.sh /workspace/A1/Hugging_down_a1.sh
 RUN chmod +x /workspace/A1/Hugging_down_a1.sh
 
-
-# 데이터 볼륨 마운트 경로 설정 (추가 보존 디렉토리)
+# 볼륨 마운트
 VOLUME ["/workspace"]
 
 # 포트 설정
@@ -100,5 +118,3 @@ jupyter lab --ip=0.0.0.0 --port=8888 --allow-root \
 python -u /workspace/ComfyUI/main.py --listen 0.0.0.0 --port=8188 \
 --front-end-version Comfy-Org/ComfyUI_frontend@latest & \
 wait"
-
-
