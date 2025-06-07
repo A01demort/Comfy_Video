@@ -104,6 +104,9 @@ RUN echo '📁 커스텀 노드 및 의존성 설치 시작' && \
     pip install ultralytics || echo '⚠️ ultralytics 실패' && \
     pip install ftfy || echo '⚠️ ftfy 실패' && \
     pip install bitsandbytes xformers || echo '⚠️ bitsandbytes 또는 xformers 설치 실패'
+    \
+    echo '🧠 sageattention 설치' && \
+    pip install sageattention || echo '⚠️ sageattention 설치 실패'
 
 
 # A1 폴더 생성 후 자동 커스텀 노드 설치 스크립트 복사
