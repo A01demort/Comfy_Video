@@ -116,8 +116,8 @@ COPY Hugging_down_a1.sh /workspace/A1/Hugging_down_a1.sh
 RUN chmod +x /workspace/A1/Hugging_down_a1.sh
 
 # Framepack_down.sh 스크립트 복사 및 실행 권한 설정
-COPY framepack_down.sh /workspace/A1/framepack_down.sh
-RUN chmod +x /workspace/A1/framepack_down.sh
+COPY Framepack_down.sh /workspace/A1/Framepack_down.sh
+RUN chmod +x /workspace/A1/Framepack_down.sh
 
 
 # 볼륨 마운트
