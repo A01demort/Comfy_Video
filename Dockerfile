@@ -46,6 +46,17 @@ RUN apt-get remove -y nodejs npm && \
 # JupyterLab 안정 버전 설치
 RUN pip install --force-reinstall jupyterlab==3.6.6 jupyter-server==1.23.6
 
+# Jupyter 설정파일 보완
+RUN mkdir -p /root/.jupyter && \
+    echo "c.NotebookApp.allow_origin = '*'\n\
+c.NotebookApp.ip = '0.0.0.0'\n\
+c.NotebookApp.open_browser = False\n\
+c.NotebookApp.token = ''\n\
+c.NotebookApp.password = ''\n\
+c.NotebookApp.terminado_settings = {'shell_command': ['/bin/bash']}" \
+> /root/.jupyter/jupyter_notebook_config.py
+
+
 # 커스텀 노드 및 의존성 설치 통합
 RUN echo '📁 커스텀 노드 및 의존성 설치 시작' && \
     mkdir -p /workspace/ComfyUI/custom_nodes && \
