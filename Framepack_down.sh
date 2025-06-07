@@ -57,17 +57,17 @@ fi
 # 📌 다운로드 리스트 (4개 파일)
 # ====================================
 downloads=(
-  # 1. Diffusion 모델
-  "https://huggingface.co/Kijai/HunyuanVideo_comfy/resolve/main/FramePackI2V_HY_fp8_e4m3fn.safetensors|ComfyUI/models/diffusion_models/FramePackI2V_HY_fp8_e4m3fn.safetensors"
+# 1. Diffusion 모델
+  "https://huggingface.co/Kijai/HunyuanVideo_comfy/resolve/main/FramePackI2V_HY_fp8_e4m3fn.safetensors|/workspace/ComfyUI/models/diffusion_models/FramePackI2V_HY_fp8_e4m3fn.safetensors"
 
   # 2. CLIP Vision 모델
-  "https://huggingface.co/Comfy-Org/sigclip_vision_384/resolve/main/sigclip_vision_patch14_384.safetensors|ComfyUI/models/clip_vision/sigclip_vision_patch14_384.safetensors"
+  "https://huggingface.co/Comfy-Org/sigclip_vision_384/resolve/main/sigclip_vision_patch14_384.safetensors|/workspace/ComfyUI/models/clip_vision/sigclip_vision_patch14_384.safetensors"
 
   # 3. VAE 모델
-  "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/vae/hunyuan_video_vae_bf16.safetensors|ComfyUI/models/vae/hunyuan_video_vae_bf16.safetensors"
+  "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/vae/hunyuan_video_vae_bf16.safetensors|/workspace/ComfyUI/models/vae/hunyuan_video_vae_bf16.safetensors"
 
   # 4. 텍스트 인코더 모델
-  "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/text_encoders/llava_llama3_fp16.safetensors|ComfyUI/models/text_encoders/llava_llama3_fp16.safetensors"
+  "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/text_encoders/llava_llama3_fp16.safetensors|/workspace/ComfyUI/models/text_encoders/llava_llama3_fp16.safetensors"
 )
 
 # ====================================
