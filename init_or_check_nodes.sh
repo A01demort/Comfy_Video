@@ -9,9 +9,21 @@ cd /workspace/ComfyUI/custom_nodes || {
 }
 
 for d in */; do
-  if [ -f "$d/requirements.txt" ]; then
+  req_file="${d}requirements.txt"
+  marker_file="${d}.installed"
+
+  if [ -f "$req_file" ]; then
+    if [ -f "$marker_file" ]; then
+      echo "⏩ $d 이미 설치됨, 건너뜀"
+      continue
+    fi
+
     echo "📦 $d 의존성 설치 중..."
-    pip install -r "$d/requirements.txt" || echo "⚠️ $d 의존성 설치 실패 (무시하고 진행)"
+    if pip install -r "$req_file"; then
+      touch "$marker_file"
+    else
+      echo "⚠️ $d 의존성 설치 실패 (무시하고 진행)"
+    fi
   fi
 done
 
